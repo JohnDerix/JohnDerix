@@ -10,6 +10,7 @@ Modules: https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html
 
 ## Sectie 2: Setup of the Lab Environment and Course Resources
 3. Precursor: Installing Docker
+```bash
 April 12th 2021 Update
 
 In the next video, 'Installing Docker', when Installing 'Docker Desktop' for either Mac or Windows, please use v3.2.2 as per the following links and not v3.3.0 -
@@ -26,10 +27,11 @@ In summary.  If you're looking for consistency when running the course, please u
 Best Regards
 
 James Spurin
+```
 4. Installing Docker
-### Docker Desktop installation for Mac or Windows
-### Docker installation for Linux
-//
+- Docker Desktop installation for Mac or Windows
+- Docker installation for Linux
+```bash
 sudo curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 sudo usermod -aG docker <username> (e.g. provision user)
@@ -37,37 +39,39 @@ sudo curl -L https://github.com/docker/compose/releases/download/1.27.4/docker-c
 sudo chmod +x /usr/local/bin/docker-compose
 /user/local/bin/docker-compose
 /user/local/bin/docker-compose version
-// 
+```
 5. Installing the Ansible Lab
 Source material: https://github.com/spurin/diveintoansible-lab
   From user directory do:
-  git clone https://github.com/spurin/diveintoansible-lab.git
-  ~ 
-  cd diveintoansible-lab
-  change CONFIG and ANSIBLE_HOME directories which fits your user folder, check with pwd
+```bash
+git clone https://github.com/spurin/diveintoansible-lab.git
+cd ~ 
+cd diveintoansible-lab
+change CONFIG and ANSIBLE_HOME directories which fits your user folder, check with pwd
+```
 6. Configuring SSH connectivity between hosts
 Check in ~/.ssh/known_hosts for existing accepted keys
-// 
+```bash
   ssh-keygen -H -F ubunutu1 # ubuntu1 is the server name and check the name with a key in known_hosts
-//
+```
 or
-//
+```bash
   ssh-keygen -H -F 192.168.3.1
-//
+```
 
-### Create private and public key
-//
+Create private and public key
+```bash
 ssh-keygen -t rsa -b 4096 -C "j.derix@johnderix.nl"
 cat ~/.ssh/id_rsa.pub 
-//
+```
 
-### Copy public key to sa erver to login passwordless
-// 
+Copy public key to sa erver to login passwordless
+```bash
 ssh-copy-id <username>@<servername>
-//
+```
 
-### From Ansible Master
-//
+From Ansible Master
+```bash
 sudo apt update
 sudo apt install sshpass
 echo password > password.txt
@@ -82,19 +86,19 @@ do
     done
   done
 done
-//
+```
 
-### Remove password file
-//
+Remove password file
+```bash
 rm password.txt
-//
+```
 
-### Test access by executing ping:
-//
+Test access by executing ping:
+```bash
 ansible -i,ubuntu1,ubuntu2,ubuntu3,centos1,centos2,centos3 all -m ping
 
 rm .ssh/known_hosts
-//
+```
 
 7. Setting up the Course Repository
 Course Code Repository: https://github.com/spurin/diveintoansible
@@ -103,7 +107,7 @@ ls
 
 8. Section 1 & 2 Quiz
 
-Sectie 3: Ansible Architecture and Design
+## Sectie 3: Ansible Architecture and Design
 9. Ansible Configuration
 
 10. Ansible Configuration - Supplementary

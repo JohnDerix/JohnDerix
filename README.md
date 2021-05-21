@@ -57,7 +57,7 @@ or
 
 ### Create private and public key
 //
-ssh-keygen 
+ssh-keygen -t rsa -b 4096 -C "j.derix@johnderix.nl"
 cat ~/.ssh/id_rsa.pub 
 //
 

@@ -1,7 +1,5 @@
 # Udemy Ansible course
 # Dive Into Ansible - From Beginner to Expert in Ansible
-## Installing the Ansible lab
-https://github.com/spurin/diveintoansible-lab
 
 ## Sectie 1: Course Overview and Introduction to Ansible
 1. about intructor James Spurin, founder of diveinto
@@ -42,7 +40,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 ```
 5. Installing the Ansible Lab
 Source material: https://github.com/spurin/diveintoansible-lab
-  From user directory do:
+From user directory do:
 ```bash
 git clone https://github.com/spurin/diveintoansible-lab.git
 cd ~ 
@@ -99,12 +97,12 @@ ansible -i,ubuntu1,ubuntu2,ubuntu3,centos1,centos2,centos3 all -m ping
 
 rm .ssh/known_hosts
 ```
-
 7. Setting up the Course Repository
 Course Code Repository: https://github.com/spurin/diveintoansible
+```bash
 git clone https://github.com/spurin/diveintoansible.git # on Ansible Master ubuntu-c in user directory ~
 ls 
-
+```
 8. Section 1 & 2 Quiz
 
 ## Sectie 3: Ansible Architecture and Design
@@ -115,11 +113,11 @@ ansible --version
 Ansible Configuration Files
 Highest priority first
 - ANSIBLE_CONFIG=<path to ansible.cfg file>
-    make variabele by:
+make variabele by
 ```bash
-    export ANSIBLE_CONFIG=/home/provision/my_ansible_config_file.cfg
-    ansible --version
-    unset ANSIBLE_CONFIG
+export ANSIBLE_CONFIG=/home/provision/my_ansible_config_file.cfg
+ansible --version
+unset ANSIBLE_CONFIG
 ```
 - ./ansible.cfg (An ansible.cfg file, in the current directory)
 - ~/.ansible.cfg (A hidden file, called .ansible.cfg, in the users home directory)

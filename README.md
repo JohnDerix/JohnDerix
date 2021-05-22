@@ -109,6 +109,138 @@ ls
 
 ## Sectie 3: Ansible Architecture and Design
 9. Ansible Configuration
+```bash
+ansible --version
+```
+Ansible Configuration Files
+Highest priority first
+- ANSIBLE_CONFIG=<path to ansible.cfg file>
+    make variabele by:
+```bash
+    export ANSIBLE_CONFIG=/home/provision/my_ansible_config_file.cfg
+    ansible --version
+    unset ANSIBLE_CONFIG
+```
+- ./ansible.cfg (An ansible.cfg file, in the current directory)
+- ~/.ansible.cfg (A hidden file, called .ansible.cfg, in the users home directory)
+- /etc/ansible/ansible.cfg (Typically provided, through packaged or system installation of Ansible)
 
 10. Ansible Configuration - Supplementary
-11. 
+```bash
+Ansible Configuration - Supplementary
+Changes to the Ansible Release Process
+
+Recently, Ansible's release approach has changed and Ansible is now a bundle consisting of what is known as 'Ansible-Base' (the Core Ansible Executable) and common 'Ansible Collections' (the built-in modules).
+
+This latest update of the course has Ansible 3.2.0 installed within the lab environment.
+
+When running 'ansible --version' you will notice that the version is listed as '2.10.7'.  This is referring to the Ansible-Base version that is provided and is not the Ansible release.
+
+You can verify that the installed version of Ansible is 3.2.0 by running the following command -
+
+ansible@ubuntu-c:~$ pip3 freeze | grep ansible
+ansible==3.2.0
+ansible-base==2.10.7
+
+I hope this helps with any confusion that may have arisen between the course listing the version as Ansible v3 and the --version output showing 2.10.7
+
+Best Regards
+
+James Spurin
+```
+11. Ansible Inventories
+```bash
+cd ~/diveintoansible/Ansible Architecture and Design/Inventories/01
+cat ansible.cfg
+cat hosts
+rm -rf /home/ansible/.ssh/known_hosts
+ansible all -m ping
+ANSIBLE_HOST_KEY_CHECKING=False ansible all -m ping
+
+cd ../02
+cat ansible.cfg
+rm -rf /home/ansible/.ssh/known_hosts
+
+cd ../03
+cat hosts
+ansible all -m ping
+ansible centos -m ping
+ansible ubuntu -m ping
+ansible '*' -m ping
+ansible all -m ping -o
+ansible centos --list-hosts
+ansible all --list-hosts
+ansible centos1 -m ping -o
+ansible ~.*3 --list-hosts
+
+cd ../04
+cat hosts
+ansible all -m ping -o
+id
+ansible all -m command -a 'id' -o
+
+cd ../05
+ansible all -m ping -o
+ansible all -a 'id' -o
+
+Goto your lab
+docker-compose up
+edit docker-compose.yaml and swithc SSHD port to 2222 for centos1
+ansible all -m ping
+
+cd ../06
+cat hosts
+
+cd ../07
+cat hosts
+
+cd ../08
+cat hosts
+# see the ansible_connection=local
+ansible all -m ping -o
+
+cd ../09
+cat hosts
+ansible all --list-hosts
+cat hosts
+
+cd ../10
+cat hosts
+ansible all -m ping -o
+
+cd ../11
+cat hosts
+ansible linux -m ping -o
+
+cd ../12
+cat hosts
+ansible linux -m ping -o
+ansible all -m ping -o
+
+cd ../13
+cat hosts
+
+cd ../14
+cat ansible.cfg
+cat hosts
+cat hosts.yaml
+
+cd ../15
+# Convert to json
+python3 -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin, Loader=yaml.FullLoader), sys.stdout, indent=4)' < hosts.yaml > hosts.json
+cat ansible.cfg
+ansible all -m ping -o
+
+cd ../16
+ansible all -m ping -o
+ansible all -i hosts.yaml --list-hosts
+ansible all -i hosts.json --list-hosts
+ansible all -i hosts --list-hosts
+
+ansible linux -m ping -e 'ansible_port=22' -o
+ansible linux -m ping -e 'ansible_port=2222' -o
+```
+12. Ansible Modules
+
+13. 
+14. 

@@ -9,22 +9,22 @@ Modules: https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html
 ## Sectie 2: Setup of the Lab Environment and Course Resources
 3. Precursor: Installing Docker
 ```bash
-April 12th 2021 Update
+#April 12th 2021 Update
 
-In the next video, 'Installing Docker', when Installing 'Docker Desktop' for either Mac or Windows, please use v3.2.2 as per the following links and not v3.3.0 -
+#In the next video, 'Installing Docker', when Installing 'Docker Desktop' for either Mac or Windows, please use v3.2.2 as per the following links and not v3.3.0 -
 
-https://docs.docker.com/docker-for-mac/release-notes/
-https://docs.docker.com/docker-for-windows/release-notes/
+#https://docs.docker.com/docker-for-mac/release-notes/
+#https://docs.docker.com/docker-for-windows/release-notes/
 
-The v3.3.0 release causes an issue in the course lab images where devices in /dev such as /dev/null, have incorrect permissions, causing issues for non-root users.  These issues relate to an updated Kernel in the latest Docker Desktop release.
+#The v3.3.0 release causes an issue in the course lab images where devices in /dev such as /dev/null, have incorrect permissions, causing issues for non-root users.  These #issues relate to an updated Kernel in the latest Docker Desktop release.
 
-There is an updated version of the lab environment that resolves this issue and during the video 'Installing the Ansible Lab' you can use the 'release-candidate' branch from github at the time should you wish to try this.  As this is tested further, I will make the new images the default and will remove this message.
+#There is an updated version of the lab environment that resolves this issue and during the video 'Installing the Ansible Lab' you can use the 'release-candidate' branch from github at the time should you wish to try this.  As this is tested further, I will make the new images the default and will remove this message.
 
-In summary.  If you're looking for consistency when running the course, please use v3.2.2 of Docker Desktop, otherwise, when using v3.3.0 use the release-candidate branch for the lab in 'Installing the Ansible Lab'
+#In summary.  If you're looking for consistency when running the course, please use v3.2.2 of Docker Desktop, otherwise, when using v3.3.0 use the release-candidate branch for the lab in 'Installing the Ansible Lab'
 
-Best Regards
+#Best Regards
 
-James Spurin
+#James Spurin
 ```
 4. Installing Docker
 - Docker Desktop installation for Mac or Windows

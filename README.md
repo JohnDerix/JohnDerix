@@ -264,11 +264,120 @@ ansible-doc file # how to use the file module
 ansible-doc fetch
 
 ## Sectie 4: Ansible Playbooks, Introduction
-13. ### Yaml
+### 13. Yaml
+use .yaml as recommendation extension since 2006, not .yml
+Ansible optionally can start with 3 dashes (---) which stand for start and ends with 3 dots (...) which stands for end, but this is not a prerequisite
 ```bash
 # Goto revision 1:
 cd /diveintoansible/Ansible Playbooks, Introduction/YAML/01
-use .yaml as standard since 2006, not yml
+ls
+cat show_yaml_python.sh
+./show_yaml_python.sh
+cd ../02
+cat test.yaml
+./show_yaml_python.sh
+## you can see that Python is threating this output as a dictionary, we know this at the curly brackets a t the start and the end!
+## a dictonairy allows you to lockup the values by the key
+python3
+myvar = {
+
+cd ../03
+cat test.yaml
 use double quotes if \n etc is used
 
-14. 
+key: | # all lines in the dictionairy will get carriage ereturn at the end (\n)
+key: > # the last line in the dictionairy will get carriage ereturn at the end (\n)
+key: >- # the minus stands for remove last character so no lines, including the last line in the dictionairy will get carriage ereturn at the end (\n)
+
+cd ../08
+python3
+myvar = {'example_integer': 1}
+print(myvar['example_integer'])
+output = 1
+print(type(myvar['example_integer']))
+output = <class ínt'>
+
+cd ../09
+# by quoting the value it changes into a string instead of an integer
+cat test.yaml # the value is between ""
+./show_yaml_output.sh # see how the output is between '' which means a string and not ann integer
+
+cd ../10
+## booleans
+## Preruiqsite is True or False
+
+cd ../11
+
+## example playbook
+
+## output between [ ]  is a list
+## e.g.
+---
+- Aston Martin
+- Fiat
+- FOrd
+- Vauxhall
+
+## output between { } is a dictionairy
+---
+Aston Martin:
+Fiat:
+Ford:
+Vauxhall:
+...
+## add key values to each manufacurer with year
+---
+Aston Martin:
+  year_founded: 1913
+  website: astonmartin.com
+Fiat:
+  year_founded: 1899
+  website: fiat.com
+Ford:
+  year_founded: 1903
+  website: ford.com
+Vauxhall:
+  year_founded: 1857
+  website: vauxhall.co.uk
+...
+
+---
+Aston Martin:
+  year_founded: 1913
+  website: astonmartin.com
+  founded_by:
+    - Lionel Martin
+    - Robert Bamford
+Fiat:
+  year_founded: 1899
+  website: fiat.com
+  founded_by:
+    - Giovanelli Agnelli
+Ford:
+  year_founded: 1903
+  website: ford.com
+  founded_by:
+    - Henry Ford
+Vauxhall:
+  year_founded: 1857
+  website: vauxhall.co.uk
+  founded_by:
+    - Alexander Wilson
+...
+```
+## 14. Ansible Playbooks, Breakdown of Sections
+```bash
+cat motd_playbook.yaml
+cd ../02
+cat centos_motd
+
+## Playbook example
+---
+- The minus in the yaml indicates a list item
+  tasks:
+    - name: Configure a MOTD
+      copy:
+        src: centos_motd
+        dest: /etc/motd
+...
+

@@ -238,7 +238,37 @@ ansible all -i hosts --list-hosts
 ansible linux -m ping -e 'ansible_port=22' -o
 ansible linux -m ping -e 'ansible_port=2222' -o
 ```
-12. Ansible Modules
+### 12. Ansible Modules
+### Idempotency, an operation is idempotent, if the result of performing it once, is exactly the same as the result of performing it repeatedly without any intervening actions.
+```bash
+# Setup module for gathering facts
+ansible all -m setup -o
+# File module
+ansible all -m file -a 'path=/tmp/test state=touch'
+ansible all -m file -a 'path=/tmp/test state=file mode=600'
+# Copy module
+touch /tmp/x
+ansiblle all -m copy -a 'src=tmp/x dest=/tmp/x' # Source = ansible host
+ansiblle all -m copy -a 'remote_src=yes src=tmp/x dest=/tmp/y' # Source = remote host
+# Command module (doesn't pass shell common variables like $home or redirection operators. If this is needed use shell command module)
+ansible all -a 'hostname' -o
+ansible all -a 'touch /tmp/test_command_module creates=/tmp/test_command_module' # Only runs if the file doesn't exist
+ansible all -a 'rm /tmp/test_command_module removes=/tmp/test_command_module' # Only runs if the file exists
+# Fetch module https://docs.ansible.com/ansible/latest/collections/ansible/builtin/fetch_module.html
+ansible all -m file -a 'path=/tmp/test_modules.txt state=touch mode=600' -o
+ansible all -m fetch -a 'src=/tmp/test_modules.txt dest=/tmp/' -o # fetch the file back from the remote host to the ansible host
+```
 
-13. 
+### Ansible doc
+ansible-doc file # how to use the file module
+ansible-doc fetch
+
+## Sectie 4: Ansible Playbooks, Introduction
+13. ### Yaml
+```bash
+# Goto revision 1:
+cd /diveintoansible/Ansible Playbooks, Introduction/YAML/01
+use .yaml as standard since 2006, not yml
+use double quotes if \n etc is used
+
 14. 

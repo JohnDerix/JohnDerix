@@ -1,0 +1,14 @@
+---
+# ~/ansible/plb_default-config.yml
+
+- import_playbook: plb_ssh-harden.yml
+- import_playbook: plb_common-config.yml
+- import_playbook: plb_antigen-zsh.yml
+#  when: env == 'staging'
+# - import_playbook: "{{ server_type }}.yml"
+
+# - name: configure webservers
+#   hosts: "{{ env }}_web
+#   roles:
+#     - nginx
+#     - mysite

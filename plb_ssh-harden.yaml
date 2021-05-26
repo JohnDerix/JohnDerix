@@ -1,0 +1,114 @@
+---
+# YAML documents begin with the document separator ---
+
+# The minus in Yaml indicates a list item. The playbook contains a list
+# of plays, with each play being a dictionary
+- 
+
+  # Hosts: where our play will run and options it will run with
+  hosts: pi
+  # Vars: variables that will apply to the play, on all target systems
+  vars:
+    provision_password: '$6$2nZ5CA..Oz$nO27UjmxuGErdQZFHvo2OIGmJYfD7rzPaRNeOeQQRqmZtz5A1hIv7tMhuHbNYJH1XIUIxzKK2NQHsDlq/ojdJ1'
+    username: provision
+  
+  gather_facts: yes
+  remote_user: provision
+  become: true
+
+  # Tasks: the list of tasks that will be executed within the play, this section
+  #        can also be used for pre and post tasks
+  tasks:
+  - name: Add a new user named provision
+    user:
+      name={{ username }}
+      password={{ provision_password }}
+
+  - name: Add provision user to the sudoers
+    copy:
+      dest: "/etc/sudoers.d/provision"
+      content: "provision  ALL=(ALL)  NOPASSWD: ALL"
+
+#  - name: Copy 60-ansible-motd to /etc/update.mot.d
+#    copy:
+#      src: 60-ansible-motd
+#      dest: /etc/update-mot.d/60-ansible-motd
+#      mode: preserve
+#    notify: 60-ansible-motd has been copied
+
+  - name: Deploy SSH Key
+    authorized_key: user={{ username }}
+                    key="{{ lookup('file', '/home/provision/.ssh/id_rsa.pub') }}"
+                    state=present
+
+  - name: Disable Password Authentication
+    lineinfile:
+          dest=/etc/ssh/sshd_config
+          regexp='^PasswordAuthentication'
+          line="PasswordAuthentication no"
+          state=absent
+          backup=yes
+    notify:
+      - restart ssh
+    when:
+      - ansible_distribution == "Debian"
+      - ansible_architecture == "armv7l"
+  - name: Disable Root Login
+    lineinfile:
+          dest=/etc/ssh/sshd_config
+          regexp='^PermitRootLogin'
+          line="PermitRootLogin no"
+          state=present
+          backup=yes
+    notify:
+      - restart ssh
+    when:
+      - ansible_distribution == "Debian"
+      - ansible_architecture == "armv7l"
+
+  - name: Install default or required packages
+    package:
+      name:
+        - git
+#       - powerline-fonts
+#       - fzf
+        - atop
+        - htop
+        - iftop
+      state: present
+    become: yes
+    tags: install_default_packages 
+
+  - name: make sure git is installed
+    package:
+      name: git
+      state: present
+
+  - name: fetch fzf from github
+    git:
+      repo: 'https://github.com/junegunn/fzf.git'
+      dest: /tmp/fzf/
+      version: HEAD # latest
+
+  - name: Run install script
+    become: yes
+    script: /tmp/fzf/install --key-bindings --completion --update-rc
+
+  # Handlers: the list of handlers that are executed as a notify key from a task
+  handlers:
+  - name: restart ssh
+    service:
+      name=sshd
+      state=restarted
+
+  - name: debug details
+    debug:
+      msg: "Changed occured and SSH has restarted"
+
+#  - name: 60-ansible-motd has been copied
+#    debug:
+#      msg: 60-ansible-motd has been copied
+
+  # Roles: list of roles to be imported into the play
+
+# Three dots indicate the end of a YAML document

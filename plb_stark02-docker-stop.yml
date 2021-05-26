@@ -1,0 +1,14 @@
+---
+ - hosts: pi
+   vars:
+     - provision_password: '$6$2nZ5CA..Oz$nO27UjmxuGErdQZFHvo2OIGmJYfD7rzPaRNeOeQQRqmZtz5A1hIv7tMhuHbNYJH1XIUIxzKK2NQHsDlq/ojdJ1'
+   gather_facts: no
+   remote_user: provision
+   become: true
+ 
+   tasks:
+ 
+   - name: Stop a container
+     docker_container:
+       name: influxdb
+       state: stopped
